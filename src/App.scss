@@ -1,0 +1,41 @@
+.App {
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.Marquee {
+  background-color: #282c34;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiB2ZXJzaW9uPSIxLjEiIHN0eWxlPSJzaGFwZS1yZW5kZXJpbmc6Z2VvbWV0cmljUHJlY2lzaW9uO3RleHQtcmVuZGVyaW5nOmdlb21ldHJpY1ByZWNpc2lvbjtpbWFnZS1yZW5kZXJpbmc6b3B0aW1pemVRdWFsaXR5OyIgdmlld0JveD0iMCAwIDc2MSA1MDgiIHg9IjBweCIgeT0iMHB4IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj4KICAgCiAgICAuZmlsMSB7ZmlsbDojMDAwMDAwfQogICAgLmZpbDAge2ZpbGw6IzAwMDAwMDtmaWxsLXJ1bGU6bm9uemVyb30KICAgCiAgPC9zdHlsZT48L2RlZnM+PGc+PHBhdGggY2xhc3M9ImZpbDAiIGQ9Ik0yOTAgOTVsLTQ4IDAgLTEzMyAxMDcgNzEgNzIgNzEgLTU0IDAgMjY0IDEyNCAwIDExIDAgMTI0IDAgMCAtMjY0IDcwIDU0IDcyIC03MiAtMTM0IC0xMDcgLTQ3IDBjLTE3LDM0IC01Myw1MiAtOTEsNTJsMCAwYy0zNywwIC03MywtMTggLTkwLC01MnptMTUgLTI0YzE0LDM1IDM4LDUyIDc1LDUybDAgMGMzOCwwIDYyLC0xNyA3NiwtNTJsNzEgMCAxNjEgMTI5IC0xMDUgMTA1IC00OSAtMzcgMCAyNDAgLTE0OCAwIC0xMSAwIC0xNDggMCAwIC0yNDAgLTQ5IDM3IC0xMDUgLTEwNSAxNjEgLTEyOSA3MSAweiI+PC9wYXRoPjxwYXRoIGNsYXNzPSJmaWwxIiBkPSJNNTEzIDBsLTM5IDAgMCA2NGMtNjMsNSAtMTI2LDUgLTE4OSwwbDAgLTY0IC0zOSAwIDAgNjBjLTc5LC05IC0xNTYsLTI1IC0yMzEsLTUwIC0xNCwtNSAtMjIsMTcgLTcsMjIgNzcsMjYgMTU3LDQzIDIzOCw1MmwzOSA0YzYzLDUgMTI2LDUgMTg5LDBsMzkgLTRjODIsLTkgMTYyLC0yNiAyNDAsLTUyIDE1LC01IDcsLTI3IC03LC0yMiAtNzYsMjUgLTE1NCw0MiAtMjMzLDUxbDAgLTYxeiI+PC9wYXRoPjwvZz48L3N2Zz4=");
+  background-position: 50%;
+  background-repeat: repeat-x;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  overflow-x: hidden;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: Marquee-background infinite 10s ease-in-out;
+  }
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes Marquee-background {
+  0% {
+    width: 100%;
+  }
+
+  50% {
+    width: 200%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
