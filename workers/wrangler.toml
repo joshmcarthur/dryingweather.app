@@ -1,0 +1,14 @@
+name = "dryingweather"
+type = "javascript"
+zone_id = ""
+account_id = "f44687d2a7dd6e8f2f9f22a846e91b5b"
+route = ""
+workers_dev = true
+
+[build]
+command = "npm install && npm run build"
+[build.upload]
+format = "service-worker"
+
+# [secrets]
+# DARKSKY_API_KEY
