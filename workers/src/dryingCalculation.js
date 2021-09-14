@@ -23,7 +23,7 @@ const summariseDryingConditions = async ({ daily, hourly } )  => {
   ];
 };
 
-const DEWPOINT_THRESHOLD = 5;
+const DEWPOINT_THRESHOLD = 2;
 const TEMPERATURE_THRESHOLD = 10;
 const BEAUFORT_SCALE_LIGHT_BREEZE_KMH = 6;
 const BEAUFORT_SCALE_STRONG_BREEZE_KMH = 38;
@@ -32,10 +32,10 @@ const CLOUD_COVER_PARTLY_CLOUDY = 0.4; // 40% cover
 const calculateDryingConditions = (forecast, minTemperature, maxTemperature) => {
   let failure = false;
   const messages = [];
-  let windSpeedScore;
 
   const temperatureScore = (forecast.temperature - minTemperature) / (maxTemperature - minTemperature) * 100;
   const humidityScore = (1.0 - forecast.humidity) * 100;
+  const windSpeedScore = 10; // This is constant for now
 
   const temperatureDewpointDifference = forecast.temperature - forecast.dewPoint;
   if (temperatureDewpointDifference < DEWPOINT_THRESHOLD) {
@@ -48,7 +48,7 @@ const calculateDryingConditions = (forecast, minTemperature, maxTemperature) => 
     messages.push({ type: "warning", message: `Temperatures below ${TEMPERATURE_THRESHOLD} degrees celsius will still dry clothes if the humidity is low, but will take longer`});
   }
 
-  if (forecast.precipProbability > 0.25) {
+  if (forecast.precipProbability > 0.5) {
     failure = true;
     messages.push({type :"warning", message: "It's likely to rain."});
   }
@@ -60,7 +60,6 @@ const calculateDryingConditions = (forecast, minTemperature, maxTemperature) => 
     messages.push({ type: "warning", message: "The wind will be strong enough that clothes drying in an unsheltered place could blow away."});
   } else {
     messages.push({ type: "info", message: "A light breeze will help circulate drier air around your washing and reduce the drying time"});
-    windSpeedScore = 10;
   }
 
   if (forecast.cloudCover < CLOUD_COVER_PARTLY_CLOUDY) {
@@ -71,7 +70,7 @@ const calculateDryingConditions = (forecast, minTemperature, maxTemperature) => 
 
   return {
     scores: {
-      overall: failure ? 0: (temperatureScore + humidityScore + windSpeedScore),
+      overall: failure ? 0 : (temperatureScore + humidityScore + windSpeedScore),
       temperatureScore, humidityScore, windSpeedScore
     },
     forecast: {
