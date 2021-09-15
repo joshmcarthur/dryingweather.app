@@ -40,7 +40,7 @@ function App() {
   const [current, setCurrent] = useState();
   useEffect(
     () =>
-      fetch("https://dryingweather.joshmcarthur.workers.dev")
+      fetch("http://localhost:8787")
         .then((r) => r.json())
         .then(({ location, dryingConditions }) => {
           setLocation(location);
@@ -54,7 +54,7 @@ function App() {
       return;
     }
 
-    document.title = `${current.scores.overall > 0 ? "Great" : "Poor"} drying conditions in ${location.city}`;
+    document.title = `Conditions are ${current.scores.overall > 0 ? "suitable" : "unsuitable"} for drying laundry in ${location.city}`;
     document.getElementById("favicon").href = current.scores.overall > 0 ? greatIcon : poorIcon;
   }, [current, location]);
 
@@ -100,8 +100,8 @@ function App() {
         </div>
         <div className="flex flex-row items-center justify-center mt-6">
           <div className="flex flex-col items-center">
-            <div className="text-4xl text-center">
-              {current && current.scores.overall > 0 ? "Great" : "Poor"} drying conditions now
+            <div className="text-3xl text-center">
+              Conditions are {current && current.scores.overall > 0 ? "suitable" : "unsuitable"} for drying laundry
             </div>
           </div>
         </div>
