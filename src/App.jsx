@@ -12,7 +12,7 @@ const MESSAGE_ICONS = {
       width="16"
       height="16"
       fill="currentColor"
-      class="w-6 h-6"
+      className="w-6 h-6"
       viewBox="0 0 16 16"
     >
       <path d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134z" />
@@ -25,7 +25,7 @@ const MESSAGE_ICONS = {
       width="16"
       height="16"
       fill="currentColor"
-      class="w-6 h-6"
+      className="w-6 h-6"
       viewBox="0 0 16 16"
     >
       <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
@@ -54,7 +54,9 @@ function App() {
       return;
     }
 
-    document.title = `Conditions are ${current.scores.overall > 0 ? "suitable" : "unsuitable"} for drying laundry in ${location.city}`;
+    document.title = `Conditions are ${current.scores.overall > 0 ? "suitable" : "unsuitable"} for drying laundry in ${
+      location.city
+    }`;
     document.getElementById("favicon").href = current.scores.overall > 0 ? greatIcon : poorIcon;
   }, [current, location]);
 
@@ -83,8 +85,8 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex items-center flex-col justify-center">
-      <div className="flex flex-col bg-white border rounded p-4 w-full max-w-xs">
+    <div className="min-h-screen flex items-center md:items-start flex-col justify-center">
+      <div className="flex flex-col bg-white md:ml-16 rounded p-4 w-full max-w-xs">
         <div className="font-bold text-xl">
           {location.city}, {location.country}
         </div>
@@ -121,13 +123,13 @@ function App() {
         </div>
         {current &&
           current.messages.map((msg, idx) => (
-            <div class={`flex flex-row items-center py-2 ${idx === 0 ? "mt-6" : ""}`}>
-              <div class="text-blue-700">{MESSAGE_ICONS[msg.type] || <span class="w-6 h-6 block"></span>}</div>
-              <div class="text-sm font-medium ml-3">{msg.message}</div>
+            <div key={msg.message} className={`flex flex-row items-center py-2 ${idx === 0 ? "mt-6" : ""}`}>
+              <div className="text-blue-700">{MESSAGE_ICONS[msg.type] || <span className="w-6 h-6 block"></span>}</div>
+              <div className="text-sm font-medium ml-3">{msg.message}</div>
             </div>
           ))}
       </div>
-      <div className="justify-self-end text-center mt-10 mb-5 text-gray-500 text-xs">
+      <div className="justify-self-end text-center w-full mt-10 mb-5 text-gray-500 text-xs">
         <a href="https://darksky.net/poweredby/">Powered by DarkSky</a>
         <br />
         Icons created by agusrahar from Noun Project
