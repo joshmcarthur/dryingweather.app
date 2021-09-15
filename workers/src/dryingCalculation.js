@@ -12,7 +12,7 @@ const summariseDryingConditions = async ({ daily, hourly } )  => {
     return {
       event: "forecast",
       time,
-      ...calculateDryingConditions(hourForecast, minTemperature, maxTemperature),
+      ...calculateDryingConditions(hourForecast, minTemperature, maxTemperature, sunset, sunrise),
     };
   }).filter(v => v);
 
@@ -29,13 +29,14 @@ const BEAUFORT_SCALE_LIGHT_BREEZE_KMH = 6;
 const BEAUFORT_SCALE_STRONG_BREEZE_KMH = 38;
 const CLOUD_COVER_PARTLY_CLOUDY = 0.4; // 40% cover
 
-const calculateDryingConditions = (forecast, minTemperature, maxTemperature) => {
+const calculateDryingConditions = (forecast, minTemperature, maxTemperature, sunrise, sunset) => {
   let failure = false;
   const messages = [];
 
   const temperatureScore = (forecast.temperature - minTemperature) / (maxTemperature - minTemperature) * 100;
   const humidityScore = (1.0 - forecast.humidity) * 100;
   const windSpeedScore = 10; // This is constant for now
+  const time = new Date(forecast.time * 1000);
 
   const temperatureDewpointDifference = forecast.temperature - forecast.dewPoint;
   if (temperatureDewpointDifference < DEWPOINT_THRESHOLD) {
@@ -66,6 +67,13 @@ const calculateDryingConditions = (forecast, minTemperature, maxTemperature) => 
     messages.push({ type: "warning", message: "Hanging clothes in full sunlight can wear out fabrics and colours more quickly"});
   } else {
     messages.push({ type: "info", message: "An overcast day is better for drying."});
+  }
+
+  if (time < sunrise || time > sunset) {
+    if (forecast.humidity >= 0.6) {
+      failure = true;
+    }
+    messages.push({type: "warning", message: "Clothes require low humidity and high temperatures to dry at nighttime."})
   }
 
   return {
