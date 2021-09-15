@@ -40,7 +40,7 @@ function App() {
   const [current, setCurrent] = useState();
   useEffect(
     () =>
-      fetch("http://localhost:8787")
+      fetch("https://dryingweather.joshmcarthur.workers.dev")
         .then((r) => r.json())
         .then(({ location, dryingConditions }) => {
           setLocation(location);
