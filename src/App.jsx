@@ -131,22 +131,29 @@ function App() {
                 <div className="text-sm font-medium ml-3">{msg.message}</div>
               </div>
             ))}
+          <div className="hidden md:block justify-self-end text-center w-full mt-10 mb-5 text-gray-500 text-xs">
+            <a href="https://darksky.net/poweredby/">Powered by DarkSky</a>
+            <br />
+            Icons created by agusrahar from Noun Project
+            <br />
+            <a href="https://dryingweather.joshmcarthur.workers.dev">Fair-use API available</a>
+            <br />
+          </div>
         </div>
-        <div class="ml-10 flex-1 flex-col flex items-center">
-          <div class="w-3 md:w-full rounded-lg rounded-r-none h-full md:h-3 bg-blue-100" />
-          {dryingConditions.map(cond => (
+        <div class="ml-10 border-l-8 pl-10 pt-16 pb-16 border-blue-100 flex-1 flex-col flex items-center">
+          {dryingConditions.map((cond) => (
             <div class="border-1">{JSON.stringify(cond)}</div>
           ))}
         </div>
       </div>
-      <div className="justify-self-end text-center w-full mt-10 mb-5 text-gray-500 text-xs">
-        <a href="https://darksky.net/poweredby/">Powered by DarkSky</a>
-        <br />
-        Icons created by agusrahar from Noun Project
-        <br />
-        <a href="https://dryingweather.joshmcarthur.workers.dev">Fair-use API available</a>
-        <br />
-      </div>
+      <div className="md:hidden justify-self-end text-center w-full mt-10 mb-5 text-gray-500 text-xs">
+            <a href="https://darksky.net/poweredby/">Powered by DarkSky</a>
+            <br />
+            Icons created by agusrahar from Noun Project
+            <br />
+            <a href="https://dryingweather.joshmcarthur.workers.dev">Fair-use API available</a>
+            <br />
+          </div>
     </div>
   );
 }
