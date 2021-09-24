@@ -86,48 +86,58 @@ function App() {
 
   return (
     <div className="min-h-screen flex items-center md:items-start flex-col justify-center">
-      <div className="flex flex-col bg-white md:ml-16 rounded p-4 w-full max-w-xs">
-        <div className="font-bold text-xl">
-          {location.city}, {location.country}
-        </div>
-        <div className="text-sm text-gray-500">
-          at {current && formatDate(new Date(current.time), "d LLL yyyy haaa")}
-        </div>
-        <div className="mt-6 text-6xl self-center inline-flex items-center justify-center rounded-lg text-blue-700 h-24 w-24">
-          {current && current.scores.overall > 0 ? (
-            <ConditionGreat className="w-32 h-32" />
-          ) : (
-            <ConditionPoor className="w-32 h-32" />
-          )}
-        </div>
-        <div className="flex flex-row items-center justify-center mt-6">
-          <div className="flex flex-col items-center">
-            <div className="text-3xl text-center">
-              Conditions are {current && current.scores.overall > 0 ? "suitable" : "unsuitable"} for drying laundry
+      <div class="flex flex-col md:flex-row items-center md:items-start w-full">
+        <div className="flex flex-col md:sticky top-16 bg-white md:ml-16 rounded p-4 w-full max-w-xs">
+          <div className="font-bold text-xl">
+            {location.city}, {location.country}
+          </div>
+          <div className="text-sm text-gray-500">
+            at {current && formatDate(new Date(current.time), "d LLL yyyy haaa")}
+          </div>
+          <div className="mt-6 text-6xl self-center inline-flex items-center justify-center rounded-lg text-blue-700 h-24 w-24">
+            {current && current.scores.overall > 0 ? (
+              <ConditionGreat className="w-32 h-32" />
+            ) : (
+              <ConditionPoor className="w-32 h-32" />
+            )}
+          </div>
+          <div className="flex flex-row items-center justify-center mt-6">
+            <div className="flex flex-col items-center">
+              <div className="text-3xl text-center">
+                Conditions are {current && current.scores.overall > 0 ? "suitable" : "unsuitable"} for drying laundry
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-row justify-between mt-6">
-          <div className="flex flex-col items-center">
-            <div className="font-bold text-sm">Dewpoint</div>
-            <div className="text-sm text-gray-500">{current && current.forecast.dewpoint.toPrecision(2)}°C</div>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="font-bold text-sm">Humidity</div>
-            <div className="text-sm text-gray-500">{current && current.forecast.humidity * 100}%</div>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="font-bold text-sm">Windspeed</div>
-            <div className="text-sm text-gray-500">{current && Math.round(current.forecast.windspeed)}km/h</div>
-          </div>
-        </div>
-        {current &&
-          current.messages.map((msg, idx) => (
-            <div key={msg.message} className={`flex flex-row items-center py-2 ${idx === 0 ? "mt-6" : ""}`}>
-              <div className="text-blue-700">{MESSAGE_ICONS[msg.type] || <span className="w-6 h-6 block"></span>}</div>
-              <div className="text-sm font-medium ml-3">{msg.message}</div>
+          <div className="flex flex-row justify-between mt-6">
+            <div className="flex flex-col items-center">
+              <div className="font-bold text-sm">Dewpoint</div>
+              <div className="text-sm text-gray-500">{current && current.forecast.dewpoint.toPrecision(2)}°C</div>
             </div>
+            <div className="flex flex-col items-center">
+              <div className="font-bold text-sm">Humidity</div>
+              <div className="text-sm text-gray-500">{current && current.forecast.humidity * 100}%</div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="font-bold text-sm">Windspeed</div>
+              <div className="text-sm text-gray-500">{current && Math.round(current.forecast.windspeed)}km/h</div>
+            </div>
+          </div>
+          {current &&
+            current.messages.map((msg, idx) => (
+              <div key={msg.message} className={`flex flex-row items-center py-2 ${idx === 0 ? "mt-6" : ""}`}>
+                <div className="text-blue-700">
+                  {MESSAGE_ICONS[msg.type] || <span className="w-6 h-6 block"></span>}
+                </div>
+                <div className="text-sm font-medium ml-3">{msg.message}</div>
+              </div>
+            ))}
+        </div>
+        <div class="ml-10 flex-1 flex-col flex items-center">
+          <div class="w-3 md:w-full rounded-lg rounded-r-none h-full md:h-3 bg-blue-100" />
+          {dryingConditions.map(cond => (
+            <div class="border-1">{JSON.stringify(cond)}</div>
           ))}
+        </div>
       </div>
       <div className="justify-self-end text-center w-full mt-10 mb-5 text-gray-500 text-xs">
         <a href="https://darksky.net/poweredby/">Powered by DarkSky</a>
