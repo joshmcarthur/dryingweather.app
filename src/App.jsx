@@ -34,6 +34,82 @@ const MESSAGE_ICONS = {
   ),
 };
 
+const EVENT_ICONS = {
+  sunrise: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="w-8 h-8"
+      viewBox="0 0 16 16"
+    >
+      <path d="M7.646 1.146a.5.5 0 0 1 .708 0l1.5 1.5a.5.5 0 0 1-.708.708L8.5 2.707V4.5a.5.5 0 0 1-1 0V2.707l-.646.647a.5.5 0 1 1-.708-.708l1.5-1.5zM2.343 4.343a.5.5 0 0 1 .707 0l1.414 1.414a.5.5 0 0 1-.707.707L2.343 5.05a.5.5 0 0 1 0-.707zm11.314 0a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zM8 7a3 3 0 0 1 2.599 4.5H5.4A3 3 0 0 1 8 7zm3.71 4.5a4 4 0 1 0-7.418 0H.499a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-3.79zM0 10a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 10zm13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
+    </svg>
+  ),
+  sunset: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="w-8 h-8"
+      viewBox="0 0 16 16"
+    >
+      <path d="M7.646 4.854a.5.5 0 0 0 .708 0l1.5-1.5a.5.5 0 0 0-.708-.708l-.646.647V1.5a.5.5 0 0 0-1 0v1.793l-.646-.647a.5.5 0 1 0-.708.708l1.5 1.5zm-5.303-.51a.5.5 0 0 1 .707 0l1.414 1.413a.5.5 0 0 1-.707.707L2.343 5.05a.5.5 0 0 1 0-.707zm11.314 0a.5.5 0 0 1 0 .706l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zM8 7a3 3 0 0 1 2.599 4.5H5.4A3 3 0 0 1 8 7zm3.71 4.5a4 4 0 1 0-7.418 0H.499a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-3.79zM0 10a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 10zm13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
+    </svg>
+  ),
+};
+
+const HourlyEvent = ({ report: { event, time } }) => (
+  <div class="flex w-full items-center p-6 space-x-6 border rounded-md shadow-sm hover:shadow-lg transform hover:scale-102 transition duration-500">
+    <div className="flex text-blue-700">{EVENT_ICONS[event] && EVENT_ICONS[event]}</div>
+    <div class="flex flex-1 font-bold text-l">{event.charAt(0).toUpperCase() + event.slice(1)}</div>
+    <div class="flex ml-auto py-3 px-4 rounded-lg text-gray-500 font-semibold">
+      {formatDate(new Date(time), "h:mmaaa")}
+    </div>
+  </div>
+);
+
+const HourlyReport = ({ report }) => {
+  if (report.event !== "forecast") {
+    return <HourlyEvent report={report} />;
+  }
+
+  return (
+    <div class="flex w-full items-center p-6 space-x-6 border rounded-md shadow-sm hover:shadow-lg transform hover:scale-102 transition duration-500">
+      <div className="flex text-blue-700">
+        {report.scores.overall > 0 ? <ConditionGreat className="w-8 h-8" /> : <ConditionPoor className="w-8 h-8" />}
+      </div>
+      <div class="flex flex-col flex-1">
+        <div class="d-block font-bold text-l">
+          {report.scores.overall > 0 ? "Suitable" : "Unsuitable"} for drying laundry
+        </div>
+        <div className="mb-2">
+          <span className="font-bold text-sm">Dewpoint: </span>
+          <span className="text-sm text-gray-500">{report.forecast.dewpoint.toPrecision(2)}°C</span>
+          <span className="ml-2 font-bold text-sm">Humidity: </span>
+          <span className="text-sm text-gray-500">{report.forecast.humidity * 100}%</span>
+          <span className="ml-2 font-bold text-sm">Windspeed: </span>
+          <span className="text-sm text-gray-500">{Math.round(report.forecast.windspeed)}km/h</span>
+        </div>
+        <div>
+          {report.messages
+            .filter((msg) => msg.type === "warning")
+            .map((msg) => (
+              <div key={msg.message} className="flex flex-row items-center py-1">
+                <div className="text-sm font-small">{msg.message}</div>
+              </div>
+            ))}
+        </div>
+      </div>
+      <div class="flex ml-auto py-3 px-4 rounded-lg text-gray-500 font-semibold">
+        {formatDate(new Date(report.time), "haaa")}
+      </div>
+    </div>
+  );
+};
+
 function App() {
   const [location, setLocation] = useState();
   const [dryingConditions, setDryingConditions] = useState([]);
@@ -140,20 +216,23 @@ function App() {
             <br />
           </div>
         </div>
-        <div class="ml-10 border-l-8 pl-10 pt-16 pb-16 border-blue-100 flex-1 flex-col flex items-center">
-          {dryingConditions.map((cond) => (
-            <div class="border-1">{JSON.stringify(cond)}</div>
-          ))}
+        <div class="mx-10 md:border-l-8 space-y-10 md:pl-10 pt-16 pb-16 border-blue-100 flex-1 flex-col flex items-center">
+          {dryingConditions
+            .filter((cond) => new Date().getDay() === new Date(cond.time).getDay())
+            .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
+            .map((cond, idx) => (
+              <HourlyReport key={`condition-${idx}`} report={cond} />
+            ))}
         </div>
       </div>
       <div className="md:hidden justify-self-end text-center w-full mt-10 mb-5 text-gray-500 text-xs">
-            <a href="https://darksky.net/poweredby/">Powered by DarkSky</a>
-            <br />
-            Icons created by agusrahar from Noun Project
-            <br />
-            <a href="https://dryingweather.joshmcarthur.workers.dev">Fair-use API available</a>
-            <br />
-          </div>
+        <a href="https://darksky.net/poweredby/">Powered by DarkSky</a>
+        <br />
+        Icons created by agusrahar from Noun Project
+        <br />
+        <a href="https://dryingweather.joshmcarthur.workers.dev">Fair-use API available</a>
+        <br />
+      </div>
     </div>
   );
 }
