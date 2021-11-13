@@ -3,6 +3,7 @@ import { format as formatDate } from "date-fns";
 import ConditionPoor from "./ConditionPoor";
 import ConditionGreat from "./ConditionGreat";
 import poorIcon from "./poor.svg";
+import cookies from "browser-cookies";
 import greatIcon from "./great.svg";
 
 const MESSAGE_ICONS = {
@@ -138,6 +139,8 @@ function App() {
 
     return;
   }, [positionMode]);
+
+  useEffect(() => cookies.set("position-mode", positionMode), [positionMode]);
 
   useEffect(() => {
     if (!current) {
