@@ -178,7 +178,7 @@ function App() {
   return (
     <div className="min-h-screen flex items-center md:items-start flex-col justify-center">
       <div className="flex flex-col md:flex-row items-center md:items-start w-full">
-        <div className="flex flex-col md:sticky top-16 bg-white md:ml-16 rounded p-4 m-10 mb-0 md:m-0">
+        <div className="flex flex-col md:sticky top-16 bg-white md:ml-16 rounded p-4 m-10 mb-0 md:m-0 max-w-full md:max-w-xs">
           {positionMode === "ip" && (
             <button
               onClick={() => setPositionMode("device")}
