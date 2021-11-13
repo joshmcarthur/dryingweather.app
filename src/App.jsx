@@ -79,6 +79,8 @@ const HourlyReport = ({ report }) => {
     return <HourlyEvent report={report} />;
   }
 
+  const formattedTime = formatDate(new Date(report.time), "haaa");
+
   return (
     <div className="flex w-full items-center p-6 space-x-6 border rounded-md shadow-sm hover:shadow-lg transform hover:scale-102 transition duration-500">
       <div className="flex text-blue-700">
@@ -86,6 +88,7 @@ const HourlyReport = ({ report }) => {
       </div>
       <div className="flex flex-col flex-1">
         <div className="d-block font-bold text-l">
+          {report.scores.overall > 0 ? "Good" : "Poor"} drying conditions at {formattedTime}
         </div>
         <div className="mb-2">
           <span className="font-bold text-sm">Dewpoint: </span>
@@ -105,9 +108,7 @@ const HourlyReport = ({ report }) => {
             ))}
         </div>
       </div>
-      <div class="flex ml-auto py-3 px-4 rounded-lg text-gray-500 font-semibold">
-        {formatDate(new Date(report.time), "haaa")}
-      </div>
+      <div className="flex ml-auto py-3 px-4 rounded-lg text-gray-500 text-xl font-semibold">{formattedTime}</div>
     </div>
   );
 };
