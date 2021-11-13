@@ -17,8 +17,8 @@ const summariseDryingConditions = async ({ daily, hourly }) => {
           hourForecast,
           minTemperature,
           maxTemperature,
-          sunset,
           sunrise,
+          sunset,
         ),
       }
     })
@@ -112,10 +112,11 @@ const calculateDryingConditions = (
     })
   }
 
+  if (forecast.humidity >= 0.6) {
+    failure = true
+  }
+
   if (time < sunrise || time > sunset) {
-    if (forecast.humidity >= 0.6) {
-      failure = true
-    }
     messages.push({
       type: 'warning',
       message:
