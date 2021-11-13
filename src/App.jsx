@@ -175,6 +175,23 @@ function App() {
   return (
     <div className="min-h-screen flex items-center md:items-start flex-col justify-center">
       <div className="flex flex-col md:flex-row items-center md:items-start w-full">
+        <div className="flex flex-col md:sticky top-16 bg-white md:ml-16 rounded p-4 m-10 mb-0 md:m-0">
+          {positionMode === "ip" && (
+            <button
+              onClick={() => setPositionMode("device")}
+              className="appearance-none text-left text-blue-800 text-sm mb-1"
+            >
+              Use device location
+            </button>
+          )}
+          {positionMode === "device" && (
+            <button
+              onClick={() => setPositionMode("ip")}
+              className="appearance-none text-left text-blue-800 text-sm mb-1"
+            >
+              Use estimated location
+            </button>
+          )}
           <div className="font-bold text-xl">
             {location.city}, {location.country}
           </div>
