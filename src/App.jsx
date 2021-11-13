@@ -193,7 +193,18 @@ function App() {
             </button>
           )}
           <div className="font-bold text-xl">
-            {location.city}, {location.country}
+            {positionMode === "ip" && (
+              <>
+                {location.city}, {location.country}
+              </>
+            )}
+            {positionMode === "device" &&
+              ((location.longitude && location.latitude && (
+                <>
+                  {location.latitude}, {location.longitude}
+                </>
+              )) ||
+                "Waiting for location...")}
           </div>
           <div className="text-sm text-gray-500">
             at {current && formatDate(new Date(current.time), "d LLL yyyy haaa")}
