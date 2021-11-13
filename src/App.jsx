@@ -117,16 +117,27 @@ function App() {
   const [location, setLocation] = useState();
   const [dryingConditions, setDryingConditions] = useState([]);
   const [current, setCurrent] = useState();
-  useEffect(
-    () =>
-      fetch("https://dryingweather.joshmcarthur.workers.dev")
+  const [positionMode, setPositionMode] = useState(cookies.get("position-mode") || "ip");
+
+  useEffect(() => {
+    const url = "https://dryingweather.joshmcarthur.workers.dev";
+    const doFetch = (url) =>
+      fetch(url)
         .then((r) => r.json())
         .then(({ location, dryingConditions }) => {
           setLocation(location);
           setDryingConditions(dryingConditions);
-        }) && undefined,
-    []
-  );
+        });
+
+    positionMode === "ip" && doFetch(url);
+    positionMode === "device" &&
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => doFetch(`${url}?lat=${latitude}&lng=${longitude}`),
+        () => setPositionMode("ip")
+      );
+
+    return;
+  }, [positionMode]);
 
   useEffect(() => {
     if (!current) {
