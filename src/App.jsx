@@ -144,9 +144,7 @@ function App() {
       return;
     }
 
-    document.title = `Conditions are ${current.scores.overall > 0 ? "suitable" : "unsuitable"} for drying laundry in ${
-      location.city
-    }`;
+    document.title = `Conditions are ${current.scores.overall > 0 ? "good" : "bad"} for drying in ${location.city}`;
     document.getElementById("favicon").href = current.scores.overall > 0 ? greatIcon : poorIcon;
   }, [current, location]);
 
@@ -193,7 +191,7 @@ function App() {
           <div className="flex flex-row items-center justify-center mt-6">
             <div className="flex flex-col items-center">
               <div className="text-3xl text-center">
-                Conditions are {current && current.scores.overall > 0 ? "suitable" : "unsuitable"} for drying laundry
+                {current && current.scores.overall > 0 ? "Good" : "Poor"} drying conditions now
               </div>
             </div>
           </div>
