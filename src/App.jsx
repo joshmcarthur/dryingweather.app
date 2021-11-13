@@ -41,7 +41,7 @@ const EVENT_ICONS = {
       width="16"
       height="16"
       fill="currentColor"
-      class="w-8 h-8"
+      className="w-8 h-8"
       viewBox="0 0 16 16"
     >
       <path d="M7.646 1.146a.5.5 0 0 1 .708 0l1.5 1.5a.5.5 0 0 1-.708.708L8.5 2.707V4.5a.5.5 0 0 1-1 0V2.707l-.646.647a.5.5 0 1 1-.708-.708l1.5-1.5zM2.343 4.343a.5.5 0 0 1 .707 0l1.414 1.414a.5.5 0 0 1-.707.707L2.343 5.05a.5.5 0 0 1 0-.707zm11.314 0a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zM8 7a3 3 0 0 1 2.599 4.5H5.4A3 3 0 0 1 8 7zm3.71 4.5a4 4 0 1 0-7.418 0H.499a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-3.79zM0 10a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 10zm13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
@@ -53,7 +53,7 @@ const EVENT_ICONS = {
       width="16"
       height="16"
       fill="currentColor"
-      class="w-8 h-8"
+      className="w-8 h-8"
       viewBox="0 0 16 16"
     >
       <path d="M7.646 4.854a.5.5 0 0 0 .708 0l1.5-1.5a.5.5 0 0 0-.708-.708l-.646.647V1.5a.5.5 0 0 0-1 0v1.793l-.646-.647a.5.5 0 1 0-.708.708l1.5 1.5zm-5.303-.51a.5.5 0 0 1 .707 0l1.414 1.413a.5.5 0 0 1-.707.707L2.343 5.05a.5.5 0 0 1 0-.707zm11.314 0a.5.5 0 0 1 0 .706l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zM8 7a3 3 0 0 1 2.599 4.5H5.4A3 3 0 0 1 8 7zm3.71 4.5a4 4 0 1 0-7.418 0H.499a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-3.79zM0 10a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 10zm13 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
@@ -62,13 +62,16 @@ const EVENT_ICONS = {
 };
 
 const HourlyEvent = ({ report: { event, time } }) => (
-  <div class="flex w-full items-center p-6 space-x-6 border rounded-md shadow-sm hover:shadow-lg transform hover:scale-102 transition duration-500">
-    <div className="flex text-blue-700">{EVENT_ICONS[event] && EVENT_ICONS[event]}</div>
-    <div class="flex flex-1 font-bold text-l">{event.charAt(0).toUpperCase() + event.slice(1)}</div>
-    <div class="flex ml-auto py-3 px-4 rounded-lg text-gray-500 font-semibold">
-      {formatDate(new Date(time), "h:mmaaa")}
+  <>
+    <div className="flex w-full items-center p-6 space-x-6 border rounded-md shadow-sm hover:shadow-lg transform hover:scale-102 transition duration-500">
+      <div className="flex text-blue-700">{EVENT_ICONS[event] && EVENT_ICONS[event]}</div>
+      <div className="flex flex-1 font-bold text-l">{event.charAt(0).toUpperCase() + event.slice(1)}</div>
+      <div className="flex ml-auto py-3 px-4 rounded-lg text-gray-500 text-xl font-semibold">
+        {formatDate(new Date(time), "h:mmaaa")}
+      </div>
     </div>
-  </div>
+    <hr className="w-full border-dashed border-1" />
+  </>
 );
 
 const HourlyReport = ({ report }) => {
@@ -77,13 +80,12 @@ const HourlyReport = ({ report }) => {
   }
 
   return (
-    <div class="flex w-full items-center p-6 space-x-6 border rounded-md shadow-sm hover:shadow-lg transform hover:scale-102 transition duration-500">
+    <div className="flex w-full items-center p-6 space-x-6 border rounded-md shadow-sm hover:shadow-lg transform hover:scale-102 transition duration-500">
       <div className="flex text-blue-700">
         {report.scores.overall > 0 ? <ConditionGreat className="w-8 h-8" /> : <ConditionPoor className="w-8 h-8" />}
       </div>
-      <div class="flex flex-col flex-1">
-        <div class="d-block font-bold text-l">
-          {report.scores.overall > 0 ? "Suitable" : "Unsuitable"} for drying laundry
+      <div className="flex flex-col flex-1">
+        <div className="d-block font-bold text-l">
         </div>
         <div className="mb-2">
           <span className="font-bold text-sm">Dewpoint: </span>
@@ -162,8 +164,7 @@ function App() {
 
   return (
     <div className="min-h-screen flex items-center md:items-start flex-col justify-center">
-      <div class="flex flex-col md:flex-row items-center md:items-start w-full">
-        <div className="flex flex-col md:sticky top-16 bg-white md:ml-16 rounded p-4 w-full max-w-xs">
+      <div className="flex flex-col md:flex-row items-center md:items-start w-full">
           <div className="font-bold text-xl">
             {location.city}, {location.country}
           </div>
@@ -216,7 +217,7 @@ function App() {
             <br />
           </div>
         </div>
-        <div class="mx-10 md:border-l-8 space-y-10 md:pl-10 pt-16 pb-16 border-blue-100 flex-1 flex-col flex items-center">
+        <div className="mx-10 md:border-l-8 space-y-10 md:pl-10 pt-16 pb-16 border-blue-100 flex-1 flex-col flex items-center">
           {dryingConditions
             .filter((cond) => new Date().getDay() === new Date(cond.time).getDay())
             .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
