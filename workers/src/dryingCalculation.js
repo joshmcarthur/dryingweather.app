@@ -112,7 +112,7 @@ const calculateDryingConditions = (
     })
   }
 
-  if (forecast.humidity >= 0.6) {
+  if (forecast.humidity >= 0.8) {
     failure = true
   }
 
